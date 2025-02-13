@@ -1,17 +1,9 @@
-<html>
-<head>
-    <title>CS 340 - Introduction to Databases</title>
-</head>
-<body>
-    <h1>CS 340 - Introduction to Databases</h1>
-    <p>Customers Table</p>
-</body>
 <table>
     <thead>
     <tr>
-        <th>Name</th>
-        <th>Address</th>
-        <th>Phone</th>
+        {% for key in bsg_people[0].keys() %}
+        <th>{{ key }}</th>
+        {% endfor %}
     </tr>
     <tbody>
     {% for customer in customers %}
