@@ -1,20 +1,156 @@
-<table>
-    <thead>
-    <tr>
-        {% for key in invoices[0].keys() %}
-        <th>{{ key }}</th>
-        {% endfor %}
-    </tr>
-    </thead>
-    <tbody>
-    {% for invoice in invoices %}
-    <tr>
-        <td>{{invoices.name}}</td>
-        <td>{{invoices.customerID}}</td>
-        <td>{{invoices.invoiceDate}}</td>
-        <td>{{invoices.invoiceTotal}}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-    </table>
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Invoices</title>
+<script language="JavaScript">
+		function showform(dowhat) {
+			/*
+			* four DIVS: browse, insert, update, delete
+			* this function sets one visible the others not
+			*/
+			if (dowhat == 'insert'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'update'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'delete'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'block';
+			}
+            else if (dowhat == 'all'){
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'block';
+			}
+			else { //by default display browse
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+		}
+    function newInvoices() { 
+        showform('insert'); 
+    }
+    function updateInvoices() { 
+        showform('update');
+    }
+    function deleteInvoices() {
+        showform ('delete'); 
+    }
+    function browseInvoices() { 
+        showform ('browse'); 
+    }
+    function showAll() { 
+        showform ('all'); 
+    }
+</script>
+</head>
+
+<body onload="browseInvoices()">
+<h1>Invoices</h1>
+
+    <nav>
+            <a href="{{ url_for('root') }}">Home</a>
+            <a href="{{ url_for('customers') }}">Customers</a>
+            <a href="{{ url_for('invoices') }}">Invoices</a>
+            <a href="{{ url_for('products') }}">Products</a>
+    </nav>
+
+
+<div id="browse">
+<p><a href="#" onClick="newInvoices()">Add Invoice</a> </p>
+{% if invoices %}
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    {% for key in invoices[0].keys() %}
+                    <th>{{ key }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for invoices in invoices %}
+                    <tr>
+                        <td><a href="#" onClick="updateInvoices()">Edit</a></td>
+                        <td><a href="#" onclick="deleteInvoices()">Delete</a></td>
+                        {% for key in invoices.keys() %}
+                        <td>{{invoices[key]}}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+</table>
+{% else %}
+    <p>No Invoices Found</p>
+{% endif %}
+
+<p>&nbsp;</p>
+</div> <!-- browse -->
+
+<div id="insert">
+    <form method="POST" id="addInvoices">
+        <legend><strong>Add Invoices</strong></legend>
+          <fieldset class="fields">
+            <label> Customer ID </label> 
+            <input type="text" name="customerID" required>
+
+            <label> Invoice Date </label> 
+            <input type="number" name="invoiceDate" required>
+
+            <label> Invoice Total </label> 
+            <input type="number" name="invoiceTotal" required>
+          </fieldset>
+          <input class="btn" type="submit" id="addInvoices" value="Add Invoices">
+          <input class="btn" type="button" value="cancel" onClick="browseInvoices()">
+	</form> 
+</div><!-- insert -->
+
+<p>&nbsp;</p>
+<div id="update">
+    <form method="POST" id="UpdateInvoices">
+        <legend><strong>Update Invoices</strong></legend>
+          <fieldset class="fields">
+            <label> Customer ID </label> 
+            <input type="text" name="customerID" required>
+
+            <label> Invoice Date </label> 
+            <input type="number" name="invoiceDate" required>
+
+            <label> Invoice Total </label> 
+            <input type="number" name="invoiceTotal" required>
+
+      </fieldset>
+          <input class="btn" type="submit" id="UpdateSaveInvoices" value="Save Update Invoices">
+          <input class="btn" type="button" value="cancel" onClick="browseInvoices()">
+	</form> 
+</div><!-- update -->
+
+<p>&nbsp;</p>
+<div id="delete" style="display: block">
+  <form method="POST" id="deleteInvoices">
+      <legend><strong>Delete Invoices</strong></legend>
+          <fieldset class="fields">
+          <p>Are you sure you wish to delete the Invoices?</p>
+            
+    </fieldset>
+    <input class="btn" type="submit" id="DeleteInvoices" value="Delete Invoices">
+          <input class="btn" type="button" value="cancel" onClick="browseInvoices()">
+  </form> 
+</div><!-- delete -->
+
+</body>
 </html>

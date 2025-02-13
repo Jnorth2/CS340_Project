@@ -1,51 +1,156 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Customers</title>
-    </head>
-    <body>
-        <h1>Shopping customer list</h1>
-        <p>Search and insert customers to the database</p>
-        <nav>
+<head>
+<title>Customers</title>
+<script language="JavaScript">
+		function showform(dowhat) {
+			/*
+			* four DIVS: browse, insert, update, delete
+			* this function sets one visible the others not
+			*/
+			if (dowhat == 'insert'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'update'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'delete'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'block';
+			}
+            else if (dowhat == 'all'){
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'block';
+			}
+			else { //by default display browse
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+		}
+    function newCustomers() { 
+        showform('insert'); 
+    }
+    function updateCustomers() { 
+        showform('update');
+    }
+    function deleteCustomers() {
+        showform ('delete'); 
+    }
+    function browseCustomers() { 
+        showform ('browse'); 
+    }
+    function showAll() { 
+        showform ('all'); 
+    }
+</script>
+</head>
+
+<body onload="browseCustomers()">
+<h1>Customers</h1>
+
+    <nav>
             <a href="{{ url_for('root') }}">Home</a>
-        </nav>
-        <br>
-        <h2> Add New Customer</h2>
-        <form action="#" method="POST" onsubmit="return false;">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name"  maxlength="30" placeholder="John Doe"    required>
-
-            <label for="address">Address:</label>
-            <input type="text" id="address" name="address" maxlength="50" placeholder="123 Main St" required>
-
-            <label for="phone">Phone:</label>
-            <input type="text" id="phone" name="phone"  maxlength="12" pattern="\d{10}" placeholder="999-999-9999" required>
-
-            <button type="submit">Submit</button>
-        </form>
+            <a href="{{ url_for('customers') }}">Customers</a>
+            <a href="{{ url_for('invoices') }}">Invoices</a>
+            <a href="{{ url_for('products') }}">Products</a>
+    </nav>
 
 
-        {% if customers %}
+<div id="browse">
+<p><a href="#" onClick="newCustomers()">Add Customer</a> </p>
+{% if customers %}
         <table>
             <thead>
                 <tr>
+                    <th></th>
+                    <th></th>
                     {% for key in customers[0].keys() %}
                     <th>{{ key }}</th>
                     {% endfor %}
                 </tr>
             </thead>
             <tbody>
-                {% for customer in customers %}
+                {% for customers in customers %}
                     <tr>
-                        {% for key in customer.keys() %}
-                        <td>{{customer[key]}}</td>
+                        <td><a href="#" onClick="updateCustomers()">Edit</a></td>
+                        <td><a href="#" onclick="deleteCustomers()">Delete</a></td>
+                        {% for key in customers.keys() %}
+                        <td>{{customers[key]}}</td>
                         {% endfor %}
                     </tr>
                 {% endfor %}
             </tbody>
-        </table>
-        {% else %}
-            <p>No Customers Found</p>
-        {% endif %}
-    </body>
+</table>
+{% else %}
+    <p>No Customers Found</p>
+{% endif %}
+
+<p>&nbsp;</p>
+</div> <!-- browse -->
+
+<div id="insert">
+    <form method="POST" id="addCustomers">
+        <legend><strong>Add Customers</strong></legend>
+          <fieldset class="fields">
+            <label> Name </label> 
+            <input type="text" name="name" required>
+
+            <label> address </label> 
+            <input type="text" name="address" required>
+
+            <label> phone </label> 
+            <input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890" required>
+
+          </fieldset>
+          <input class="btn" type="submit" id="addCustomers" value="Add Customers">
+          <input class="btn" type="button" value="cancel" onClick="browseCustomers()">
+	</form> 
+</div><!-- insert -->
+
+<p>&nbsp;</p>
+<div id="update">
+    <form method="POST" id="UpdateCustomers">
+        <legend><strong>Update Customers</strong></legend>
+          <fieldset class="fields">
+            <label> Name </label> 
+            <input type="text" name="name" required>
+
+            <label> Address </label> 
+            <input type="text" name="address" required>
+
+            <label> phone </label> 
+            <input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890" required>
+
+      </fieldset>
+          <input class="btn" type="submit" id="UpdateSaveCustomers" value="Save Update Customers">
+          <input class="btn" type="button" value="cancel" onClick="browseCustomers()">
+	</form> 
+</div><!-- update -->
+
+<p>&nbsp;</p>
+<div id="delete" style="display: block">
+  <form method="POST" id="deleteCustomers">
+      <legend><strong>Delete Customers</strong></legend>
+          <fieldset class="fields">
+          <p>Are you sure you wish to delete the Customers?</p>
+            
+    </fieldset>
+    <input class="btn" type="submit" id="DeleteCustomers" value="Delete Customers">
+          <input class="btn" type="button" value="cancel" onClick="browseCustomers()">
+  </form> 
+</div><!-- delete -->
+
+</body>
 </html>

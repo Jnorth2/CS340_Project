@@ -24,8 +24,15 @@ def customers():
 def invoices():
     query = "SELECT * FROM Invoices;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
-    results = json.dumps(cursor.fetchall())
-    return results
+    results = cursor.fetchall()
+    return render_template("invoices.j2", invoices=results)
+
+@app.route('/products')
+def products():
+    query = "SELECT * FROM Products;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    results = cursor.fetchall()
+    return render_template("products.j2", products=results)
 
 # Listener
 
