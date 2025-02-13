@@ -15,7 +15,17 @@ def root():
 
 @app.route('/customers')
 def customers():
-    return "database"
+    query = "SELECT * FROM Customers;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    results = json.dumps(cursor.fetchall())
+    return results
+
+@app.route('/invoices')
+def invoices():
+    query = "SELECT * FROM Invoices;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    results = json.dumps(cursor.fetchall())
+    return results
 
 # Listener
 
