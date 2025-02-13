@@ -1,3 +1,12 @@
+<html>
+<head>
+    <title>Customers</title>
+</head>
+<body>
+    <h1>Shopping customer list</h1>
+    <p>Search and insert customers to the database</p>
+</body>
+
 <table>
     <thead>
     <tr>
@@ -8,9 +17,9 @@
     <tbody>
     {% for customer in customers %}
     <tr>
-        <td>{{customer.name}}</td>
-        <td>{{customer.address}}</td>
-        <td>{{customer.phone}}</td>
+        {% for key in customer.keys() %}
+        <td>{{customer[key]}}</td>
+        {% endfor %}
     </tr>
     {% endfor %}
     </table>

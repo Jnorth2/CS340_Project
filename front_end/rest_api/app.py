@@ -17,8 +17,8 @@ def root():
 def customers():
     query = "SELECT * FROM Customers;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
-    results = json.dumps(cursor.fetchall())
-    return results
+    results = cursor.fetchall()
+    return render_template("customers.j2", customers = results)
 
 @app.route('/invoices')
 def invoices():

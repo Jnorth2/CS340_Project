@@ -50,6 +50,7 @@ CREATE OR REPLACE TABLE Deliveries(
     deliveryID int AUTO_INCREMENT NOT NULL PRIMARY KEY,
     deliveryDue date NOT NULL,
     invoiceID int NOT NULL,
+    customerID int NOT NULL,
     FOREIGN KEY (customerID) REFERENCES Customers(customerID) ON DELETE RESTRICT,
     FOREIGN KEY (invoiceID) REFERENCES Invoices(invoiceID) ON DELETE RESTRICT
 );
