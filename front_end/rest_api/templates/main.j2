@@ -1,27 +1,13 @@
 <html>
 <head>
-    <title>OSU - CS 340 - Introduction to Databases - Flask Demo Project</title>
+    <title>Groccery Database</title>
 </head>
 <body>
-    <h1>CS 340 - Introduction to Databases</h1>
-    <p>This is a demonstration project created to show students how to create a Flask app and connect it to a MySQL database.</p>
+    <h1>Groccery Store Database</h1>
+    <p>This database keeps track of customers and their orders.</p>
+    <nav>
+        <a href="{{ url_for('customers') }}">Customers</a>
+        <a href="{{ url_for('invoices') }}">Invoices</a>
+    </nav>
 </body>
-<table>
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Age</th>
-        <th>Location</th>
-        <th>Favorite Language</th>
-    </tr>
-    <tbody>
-    {% for item in people %}
-    <tr>
-        <td>{{item['name']}}</td>
-        <td>{{item['age']}}</td>
-        <td>{{item['location']}}</td>
-        <td>{{item['favorite_color']}}</td>
-    </tr>
-    {% endfor %}
-    </table>
 </html>
