@@ -1,26 +1,24 @@
 <html>
 <head>
-    <title>OSU - CS 340 - Introduction to Databases - Flask Demo Project</title>
+    <title>CS 340 - Introduction to Databases</title>
 </head>
 <body>
     <h1>CS 340 - Introduction to Databases</h1>
-    <p>This is a demonstration project created to show students how to create a Flask app and connect it to a MySQL database.</p>
+    <p>Customers Table</p>
 </body>
 <table>
     <thead>
     <tr>
         <th>Name</th>
-        <th>Age</th>
-        <th>Location</th>
-        <th>Favorite Language</th>
+        <th>Address</th>
+        <th>Phone</th>
     </tr>
     <tbody>
-    {% for item in people %}
+    {% for customer in customers %}
     <tr>
-        <td>{{item['name']}}</td>
-        <td>{{item['age']}}</td>
-        <td>{{item['location']}}</td>
-        <td>{{item['favorite_color']}}</td>
+        <td>{{customer.name}}</td>
+        <td>{{customer.address}}</td>
+        <td>{{customer.phone}}</td>
     </tr>
     {% endfor %}
     </table>
