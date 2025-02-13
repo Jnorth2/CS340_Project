@@ -19,7 +19,6 @@ def customers():
     cursor = db.execute_query(db_connection=db_connection, query=query)
     results = cursor.fetchall()
     return render_template("customers.j2", customers = results)
-
 @app.route('/invoices')
 def invoices():
     query = "SELECT * FROM Invoices;"

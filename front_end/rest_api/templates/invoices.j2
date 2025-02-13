@@ -5,6 +5,7 @@
         <th>{{ key }}</th>
         {% endfor %}
     </tr>
+    </thead>
     <tbody>
     {% for invoice in invoices %}
     <tr>
@@ -14,5 +15,6 @@
         <td>{{invoices.invoiceTotal}}</td>
     </tr>
     {% endfor %}
+    </tbody>
     </table>
 </html>

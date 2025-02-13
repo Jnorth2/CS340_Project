@@ -1,29 +1,49 @@
+<!DOCTYPE html>
 <html>
-<head>
-    <title>Customers</title>
-</head>
-<body>
-    <h1>Shopping customer list</h1>
-    <p>Search and insert customers to the database</p>
-    <nav>
-        <a href="{{ url_for('root') }}">Home</a>
-    </nav>
-</body>
+    <head>
+        <title>Customers</title>
+    </head>
+    <body>
+        <h1>Shopping customer list</h1>
+        <p>Search and insert customers to the database</p>
+        <nav>
+            <a href="{{ url_for('root') }}">Home</a>
+        </nav>
+        <form action="#" method="POST" onsubmit="return false;">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name"  maxlength="30" required>
 
-<table>
-    <thead>
-    <tr>
-        {% for key in customers[0].keys() %}
-        <th>{{ key }}</th>
-        {% endfor %}
-    </tr>
-    <tbody>
-    {% for customer in customers %}
-    <tr>
-        {% for key in customer.keys() %}
-        <td>{{customer[key]}}</td>
-        {% endfor %}
-    </tr>
-    {% endfor %}
-    </table>
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" maxlength="50" required>
+
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone"  maxlength="10" pattern="\d{10}" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    
+
+        {% if customers %}
+        <table>
+            <thead>
+                <tr>
+                    {% for key in customers[0].keys() %}
+                    <th>{{ key }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                    <tr>
+                        {% for key in customer.keys() %}
+                        <td>{{customer[key]}}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p>No Customers Found</p>
+        {% endif %}
+    </body>
 </html>
