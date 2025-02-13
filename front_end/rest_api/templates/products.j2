@@ -1,0 +1,18 @@
+<table>
+    <thead>
+    <tr>
+        {% for key in products[0].keys() %}
+        <th>{{ key }}</th>
+        {% endfor %}
+    </tr>
+    <tbody>
+    {% for product in products %}
+    <tr>
+        <td>{{products.productID}}</td>
+        <td>{{products.productName}}</td>
+        <td>{{products.cost}}</td>
+        <td>{{products.inventory}}</td>
+    </tr>
+    {% endfor %}
+    </table>
+</html>
