@@ -1,24 +1,15 @@
-<html>
-<head>
-    <title>CS 340 - Introduction to Databases</title>
-</head>
-<body>
-    <h1>CS 340 - Introduction to Databases</h1>
-    <p>Customers Table</p>
-</body>
 <table>
     <thead>
     <tr>
-        <th>invoiceID</th>
-        <th>customerID</th>
-        <th>invoiceDate</th>
-        <th>invoiceTotal</th>
+        {% for key in invoices[0].keys() %}
+        <th>{{ key }}</th>
+        {% endfor %}
     </tr>
     <tbody>
     {% for invoice in invoices %}
     <tr>
-        <td>{{invoices.invoiceID}}</td>
-        <td>{{customer.customerID}}</td>
+        <td>{{invoices.name}}</td>
+        <td>{{invoices.customerID}}</td>
         <td>{{invoices.invoiceDate}}</td>
         <td>{{invoices.invoiceTotal}}</td>
     </tr>
