@@ -1,5 +1,6 @@
 from flask import Flask, render_template, json
 import os
+from dotenv import load_dotenv, find_dotenv
 import database.db_connector as db
 
 # Configuration
@@ -29,5 +30,6 @@ def invoices():
 # Listener
 
 if __name__ == "__main__":
+    load_dotenv(find_dotenv())
     port = int(os.environ.get('PORT', 3382))
     app.run(port=port, debug=True)
