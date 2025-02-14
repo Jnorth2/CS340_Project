@@ -1,29 +1,24 @@
+/*SQL file that creates and populates 5 tables */
+
 SET FOREIGN_KEY_CHECKS =0;
 SET AUTOCOMMIT =0;
--- ----------------------------------------------------------------------------
--- CREATE TABLES FOR Customers, Invoices, Products, InvoiceDetails, Deliveries
--- ----------------------------------------------------------------------------
 
--- Customers
 CREATE OR REPLACE TABLE Customers (
     customerID int AUTO_INCREMENT PRIMARY KEY,
     name varchar(30) NOT NULL,
-    address varchar(150) NOT NULL,
+    address varchar(50) NOT NULL,
     phone char(10) NOT NULL
 );
 
--- Invoices
 CREATE OR REPLACE TABLE Invoices (
     invoiceID int AUTO_INCREMENT NOT NULL PRIMARY KEY,
     customerID int NOT NULL,
     invoiceDate date NOT NULL,
     invoiceTotal decimal(10,2) NOT NULL,
-    FOREIGN KEY (customerID) REFERENCES Customers(customerID)
-     ON DELETE CASCADE
-     ON UPDATE CASCADE 
+    FOREIGN KEY (customerID) REFERENCES Customers(customerID) ON DELETE CASCADE
+    
 );
 
--- Products
 CREATE OR REPLACE TABLE Products (
     productID int AUTO_INCREMENT NOT NULL PRIMARY KEY,
     productName varchar(30) NOT NULL,
@@ -31,34 +26,24 @@ CREATE OR REPLACE TABLE Products (
     inventory int NOT NULL default 0
 );
 
--- InvoiceDetails
 CREATE OR REPLACE TABLE InvoiceDetails(
     detailsID int AUTO_INCREMENT NOT NULL PRIMARY KEY,
     invoiceID int NOT NULL,
     productID int NOT NULL,
     quantity int NOT NULL default 0,
-    FOREIGN KEY (invoiceID) REFERENCES Invoices(invoiceID)
-     ON DELETE CASCADE
-     ON UPDATE CASCADE,
-    FOREIGN KEY (productID) REFERENCES Products(productID)
-     ON DELETE RESTRICT
-     ON UPDATE CASCADE
+    FOREIGN KEY (invoiceID) REFERENCES Invoices(invoiceID) ON DELETE CASCADE,
+    FOREIGN KEY (productID) REFERENCES Products(productID) ON DELETE CASCADE
 );
 
--- Deliveries
 CREATE OR REPLACE TABLE Deliveries(
     deliveryID int AUTO_INCREMENT NOT NULL PRIMARY KEY,
     deliveryDue date NOT NULL,
-    invoiceID int NOT NULL,
     customerID int NOT NULL,
-    FOREIGN KEY (customerID) REFERENCES Customers(customerID) ON DELETE RESTRICT,
-    FOREIGN KEY (invoiceID) REFERENCES Invoices(invoiceID) ON DELETE RESTRICT
+    invoiceID int NOT NULL,
+    FOREIGN KEY (customerID) REFERENCES Customers(customerID) ON DELETE CASCADE,
+    FOREIGN KEY (invoiceID) REFERENCES Invoices(invoiceID) ON DELETE CASCADE
 );
--- ----------------------------------------------------------------------------
--- INSERT TABLES FOR Customers, Invoices, Products, InvoiceDetails, Deliveries
--- ----------------------------------------------------------------------------
 
--- Customers
 INSERT INTO Customers (
     customerID,
     name,
@@ -85,7 +70,6 @@ VALUES
     "2132446534"
 );
 
--- Invoices
 INSERT INTO Invoices (
     invoiceID,
     customerID,
@@ -118,7 +102,6 @@ VALUES
    456.78
 );
 
--- Products
 INSERT INTO Products (
     productID,
     productName,
@@ -151,7 +134,35 @@ VALUES
     5
 );
 
--- Deliveries
+
+INSERT INTO `InvoiceDetails`(
+    `productID`, 
+    `invoiceID`, 
+    `quantity`
+) 
+VALUES
+(
+    (SELECT productID FROM Products WHERE productName = "Steam Deck"),
+    2,
+    2
+),
+((SELECT productID FROM Products WHERE productName = "Xbox Controller"),
+    2,
+    4
+),
+((SELECT productID FROM Products WHERE productName = "1080p Monitor"),
+    1, 
+    2
+),
+((SELECT productID FROM Products WHERE productName = "Keyboard"),
+    3, 
+    2
+),
+((SELECT productID FROM Products WHERE productName = "Xbox Controller"),
+    1, 
+    3
+);
+
 INSERT INTO Deliveries (
     deliveryID,
     deliveryDue,
@@ -178,34 +189,6 @@ VALUES
     3
 );
 
--- InvoiceDetails
-INSERT INTO InvoiceDetails(
-    productID, 
-    invoiceID, 
-    quantity
-) 
-VALUES
-(
-    (SELECT productID FROM Products WHERE productName = "Steam Deck"),
-    2,
-    2
-),
-((SELECT productID FROM Products WHERE productName = "Xbox Controller"),
-    2,
-    4
-),
-((SELECT productID FROM Products WHERE productName = "1080p Monitor"),
-    1, 
-    2
-),
-((SELECT productID FROM Products WHERE productName = "Keyboard"),
-    3, 
-    2
-),
-((SELECT productID FROM Products WHERE productName = "Xbox Controller"),
-    1, 
-    3
-);
 
 
 SET FOREIGN_KEY_CHECKS=1;
