@@ -34,6 +34,14 @@ def products():
     results = cursor.fetchall()
     return render_template("products.j2", products=results)
 
+@app.route('/deliveries')
+def deliveries():
+    query = "SELECT * FROM Deliveries"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    results = cursor.fetchall()
+    return render_template("deliveries.j2", deliveries=results)
+
+    
 # Listener
 
 if __name__ == "__main__":

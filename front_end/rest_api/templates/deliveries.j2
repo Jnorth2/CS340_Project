@@ -1,8 +1,7 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-<title>Invoices</title>
+<title>Deliveries</title>
 <script language="JavaScript">
 		function showform(dowhat) {
 			/*
@@ -40,16 +39,16 @@
 				document.getElementById('delete').style.display = 'none';
 			}
 		}
-    function newInvoices() { 
+    function newDeliveries() { 
         showform('insert'); 
     }
-    function updateInvoices() { 
+    function updateDeliveries() { 
         showform('update');
     }
-    function deleteInvoices() {
+    function deleteDeliveries() {
         showform ('delete'); 
     }
-    function browseInvoices() { 
+    function browseDeliveries() { 
         showform ('browse'); 
     }
     function showAll() { 
@@ -58,8 +57,8 @@
 </script>
 </head>
 
-<body onload="browseInvoices()">
-<h1>Invoices</h1>
+<body onload="browseDeliveries()">
+<h1>Deliveries</h1>
 
     <nav>
             <a href="{{ url_for('root') }}">Home</a>
@@ -71,89 +70,86 @@
 
 
 <div id="browse">
-<p><a href="#" onClick="newInvoices()">Add Invoice</a> </p>
-{% if invoices %}
+<p><a href="#" onClick="newDeliveries()">Add Delivery</a> </p>
+{% if deliveries %}
         <table>
             <thead>
                 <tr>
                     <th></th>
                     <th></th>
-                    {% for key in invoices[0].keys() %}
+                    {% for key in deliveries[0].keys() %}
                     <th>{{ key }}</th>
                     {% endfor %}
                 </tr>
             </thead>
             <tbody>
-                {% for invoices in invoices %}
+                {% for deliveries in deliveries %}
                     <tr>
-                        <td><a href="#" onClick="updateInvoices()">Edit</a></td>
-                        <td><a href="#" onclick="deleteInvoices()">Delete</a></td>
-                        {% for key in invoices.keys() %}
-                        <td>{{invoices[key]}}</td>
+                        <td><a href="#" onClick="updateDeliveries()">Edit</a></td>
+                        <td><a href="#" onclick="deleteDeliveries()">Delete</a></td>
+                        {% for key in deliveries.keys() %}
+                        <td>{{deliveries[key]}}</td>
                         {% endfor %}
                     </tr>
                 {% endfor %}
             </tbody>
 </table>
 {% else %}
-    <p>No Invoices Found</p>
+    <p>No Deliveries Found</p>
 {% endif %}
 
 <p>&nbsp;</p>
 </div> <!-- browse -->
 
 <div id="insert">
-    <form method="POST" id="addInvoices">
-        <legend><strong>Add Invoices</strong></legend>
+    <form method="POST" id="addDeliveries">
+        <legend><strong>Add Deliveries</strong></legend>
           <fieldset class="fields">
+            <label> Delivery Date </label> 
+            <input type="date" name="deliveryDate" required>
+
+            <label> Invoice ID </label> 
+            <input type="number" name="invoiceID" required>
+
             <label> Customer ID </label> 
-            <input type="text" name="customerID" required>
-
-            <label> Invoice Date </label> 
-            <input type="number" name="invoiceDate" required>
-
-            <label> Invoice Total </label> 
-            <input type="number" name="invoiceTotal" required>
-
-            <label> Delivery Date  </label> 
-            <input type="date" name="deliveryDate" placeholder="optional">
+            <input type="number" name="customerID"  required>
 
           </fieldset>
-          <input class="btn" type="submit" id="addInvoices" value="Add Invoices">
-          <input class="btn" type="button" value="cancel" onClick="browseInvoices()">
+          <input class="btn" type="submit" id="addDeliveries" value="Add Deliveries">
+          <input class="btn" type="button" value="cancel" onClick="browseDeliveries()">
 	</form> 
 </div><!-- insert -->
 
 <p>&nbsp;</p>
 <div id="update">
-    <form method="POST" id="UpdateInvoices">
-        <legend><strong>Update Invoices</strong></legend>
+    <form method="POST" id="UpdateDeliveries">
+        <legend><strong>Update Deliveries</strong></legend>
           <fieldset class="fields">
+            <label> Delivery Date </label> 
+            <input type="date" name="deliveryDate" required>
+
+            <label> Invoice ID </label> 
+            <input type="number" name="invoiceID" required>
+
             <label> Customer ID </label> 
-            <input type="text" name="customerID" required>
-
-            <label> Invoice Date </label> 
-            <input type="number" name="invoiceDate" required>
-
-            <label> Invoice Total </label> 
-            <input type="number" name="invoiceTotal" required>
+            <input type="number" name="customerID" required>
 
       </fieldset>
-          <input class="btn" type="submit" id="UpdateSaveInvoices" value="Save Update Invoices">
-          <input class="btn" type="button" value="cancel" onClick="browseInvoices()">
+          <input class="btn" type="submit" id="UpdateSaveDeliveries" value="Save Update Deliveries">
+          <input class="btn" type="button" value="cancel" onClick="browseDeliveries()">
 	</form> 
 </div><!-- update -->
 
 <p>&nbsp;</p>
 <div id="delete" style="display: block">
-  <form method="POST" id="deleteInvoices">
-      <legend><strong>Delete Invoices</strong></legend>
+  <form method="POST" id="deleteDeliveries">
+      <legend><strong>Delete Deliveries</strong></legend>
           <fieldset class="fields">
-          <p>Are you sure you wish to delete the Invoices?</p>
+          <p>Are you sure you wish to delete the Deliveries?</p>
             
     </fieldset>
-    <input class="btn" type="submit" id="DeleteInvoices" value="Delete Invoices">
-          <input class="btn" type="button" value="cancel" onClick="browseInvoices()">
+    <input class="btn" type="submit" id="DeleteDeliveries" value="Delete Deliveries">
+          <input class="btn" type="button" value="cancel" onClick="browseDeliveries()">
   </form> 
 </div><!-- delete -->
 

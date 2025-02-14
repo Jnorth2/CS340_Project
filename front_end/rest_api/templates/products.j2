@@ -66,6 +66,7 @@
             <a href="{{ url_for('customers') }}">Customers</a>
             <a href="{{ url_for('invoices') }}">Invoices</a>
             <a href="{{ url_for('products') }}">Products</a>
+            <a href="{{ url_for('deliveries') }}">Deliveries</a>
     </nav>
 
 
@@ -87,6 +88,7 @@
                     <tr>
                         <td><a href="#" onClick="updateProduct()">Edit</a></td>
                         <td><a href="#" onclick="deleteProduct()">Delete</a></td>
+                        <td><a href="#" onClick="addToInvoice()">Add to Invoice</a></td>
                         {% for key in product.keys() %}
                         <td>{{product[key]}}</td>
                         {% endfor %}
